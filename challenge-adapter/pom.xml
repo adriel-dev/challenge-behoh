@@ -24,6 +24,8 @@
         <spring-boot.version>3.3.2</spring-boot.version>
 
         <challenge-domain.version>1.0.0-SNAPSHOT</challenge-domain.version>
+        <challenge-persistence.version>1.0.0-SNAPSHOT</challenge-persistence.version>
+        <challenge-web.version>1.0.0-SNAPSHOT</challenge-web.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +42,16 @@
                 <groupId>com.behoh</groupId>
                 <artifactId>challenge-domain</artifactId>
                 <version>${challenge-domain.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.behoh</groupId>
+                <artifactId>challenge-persistence</artifactId>
+                <version>${challenge-persistence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.behoh</groupId>
+                <artifactId>challenge-web</artifactId>
+                <version>${challenge-web.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
