@@ -1,10 +1,16 @@
 package com.behoh.domain.event.model;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class Event {
-    private UUID id;
+    private Long id;
     private String name;
     private int capacity;
     private LocalDateTime startDateTime;

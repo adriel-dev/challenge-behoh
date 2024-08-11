@@ -1,8 +1,13 @@
 package com.behoh.domain.user.model;
 
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class User {
-    private UUID id;
+    private Long id;
     private String name;
 }
