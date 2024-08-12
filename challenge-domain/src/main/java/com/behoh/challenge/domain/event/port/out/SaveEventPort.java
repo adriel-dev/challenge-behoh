@@ -4,5 +4,4 @@ import com.behoh.challenge.domain.event.model.Event;
 
 public interface SaveEventPort {
     Event saveEvent(Event event);
-    Event updateEvent(Event event);
 }
