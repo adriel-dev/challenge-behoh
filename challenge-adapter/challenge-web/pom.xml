@@ -27,6 +27,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.behoh</groupId>
+            <artifactId>challenge-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.behoh</groupId>
+            <artifactId>challenge-persistence</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
