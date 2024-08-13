@@ -15,6 +15,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <springdoc-openapi-starter-webmvc-ui.version>2.6.0</springdoc-openapi-starter-webmvc-ui.version>
     </properties>
 
     <dependencies>
@@ -26,6 +28,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.behoh</groupId>
+            <artifactId>challenge-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.behoh</groupId>
+            <artifactId>challenge-persistence</artifactId>
         </dependency>
     </dependencies>
 
@@ -43,6 +59,12 @@
                 </executions>
                 <configuration>
                     <executable>true</executable>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
