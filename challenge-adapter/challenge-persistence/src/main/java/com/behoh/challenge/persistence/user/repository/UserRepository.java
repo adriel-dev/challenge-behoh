@@ -6,8 +6,10 @@ import com.behoh.challenge.domain.user.port.out.FindUserPort;
 import com.behoh.challenge.domain.user.port.out.SaveUserPort;
 import com.behoh.challenge.persistence.user.converter.UserPersistenceConverter;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 @AllArgsConstructor
+@Repository
 public class UserRepository implements SaveUserPort, FindUserPort {
 
     private UserJpaRepository userJpaRepository;
