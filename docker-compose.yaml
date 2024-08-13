@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: challenge-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/challenge
+      SPRING_DATASOURCE_USERNAME: behoh
+      SPRING_DATASOURCE_PASSWORD: challenge
+    depends_on:
+      - db
+  db:
+    image: postgres:16.2
+    container_name: postgresql-challenge
+    environment:
+      POSTGRES_DB: challenge
+      POSTGRES_USER: behoh
+      POSTGRES_PASSWORD: challenge
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
