@@ -17,7 +17,6 @@ CREATE TABLE tb_event_user (
     check_in_date_time TIMESTAMP,
     reservation_date_time TIMESTAMP,
     confirmed BOOLEAN DEFAULT FALSE,
-    canceled BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (event_id, user_id),
     CONSTRAINT fk_event FOREIGN KEY (event_id) REFERENCES tb_event(id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES tb_user(id)

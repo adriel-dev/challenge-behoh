@@ -3,17 +3,17 @@ package com.behoh.challenge.domain.participation.port.in.usecases.impl;
 import com.behoh.challenge.domain.participation.port.in.usecases.CheckInUserToEvent;
 import com.behoh.challenge.domain.participation.port.out.FindParticipationPort;
 import com.behoh.challenge.domain.participation.port.out.SaveParticipationPort;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 import static com.behoh.challenge.domain.participation.util.ParticipationUtils.canCheckIn;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CheckInUserToEventImpl implements CheckInUserToEvent {
 
-    private FindParticipationPort findParticipationPort;
-    private SaveParticipationPort saveParticipationPort;
+    private final FindParticipationPort findParticipationPort;
+    private final SaveParticipationPort saveParticipationPort;
 
     @Override
     public void checkIn(Long userID, Long eventId) {

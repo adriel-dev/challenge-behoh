@@ -5,13 +5,15 @@ import com.behoh.challenge.domain.user.model.User;
 import com.behoh.challenge.domain.user.port.out.FindUserPort;
 import com.behoh.challenge.domain.user.port.out.SaveUserPort;
 import com.behoh.challenge.persistence.user.converter.UserPersistenceConverter;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Repository
 public class UserRepository implements SaveUserPort, FindUserPort {
 
-    private UserJpaRepository userJpaRepository;
-    private UserPersistenceConverter converter;
+    private final UserJpaRepository userJpaRepository;
+    private final UserPersistenceConverter converter;
 
     @Override
     public User findUserById(Long userId) {

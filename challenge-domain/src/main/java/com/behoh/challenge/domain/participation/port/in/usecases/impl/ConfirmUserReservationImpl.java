@@ -3,15 +3,15 @@ package com.behoh.challenge.domain.participation.port.in.usecases.impl;
 import com.behoh.challenge.domain.participation.port.in.usecases.ConfirmUserReservation;
 import com.behoh.challenge.domain.participation.port.out.FindParticipationPort;
 import com.behoh.challenge.domain.participation.port.out.SaveParticipationPort;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import static com.behoh.challenge.domain.participation.util.ParticipationUtils.canRegisterOrReserve;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ConfirmUserReservationImpl implements ConfirmUserReservation {
 
-    private SaveParticipationPort saveParticipationPort;
-    private FindParticipationPort findParticipationPort;
+    private final SaveParticipationPort saveParticipationPort;
+    private final FindParticipationPort findParticipationPort;
 
     @Override
     public void confirm(Long userId, Long eventId) {

@@ -18,7 +18,6 @@ public class Participation {
     private LocalDateTime checkInDateTime = null;
     private LocalDateTime reservationDateTime = null;
     private boolean confirmed = false;
-    private boolean canceled = false;
 
     public Participation(Event event, User user) {
         this.event = event;

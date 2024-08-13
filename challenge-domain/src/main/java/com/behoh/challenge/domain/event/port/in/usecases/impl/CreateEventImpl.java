@@ -4,18 +4,18 @@ import com.behoh.challenge.domain.event.exception.InvalidEventDatesException;
 import com.behoh.challenge.domain.event.model.Event;
 import com.behoh.challenge.domain.event.port.in.usecases.CreateEvent;
 import com.behoh.challenge.domain.event.port.out.SaveEventPort;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CreateEventImpl implements CreateEvent {
 
-    private SaveEventPort saveEventPort;
+    private final SaveEventPort saveEventPort;
 
     @Override
     public Event create(Event event) {
         var eventStart = event.getStartDateTime();
         var eventEnd = event.getEndDateTime();
-        if(eventStart.isAfter(eventEnd) || eventStart.isEqual(eventEnd)) {
+        if(!eventEnd.isAfter(eventStart)) {
             throw new InvalidEventDatesException();
         }
         return saveEventPort.saveEvent(event);

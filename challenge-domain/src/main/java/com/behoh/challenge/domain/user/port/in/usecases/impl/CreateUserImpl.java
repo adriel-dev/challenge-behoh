@@ -3,12 +3,12 @@ package com.behoh.challenge.domain.user.port.in.usecases.impl;
 import com.behoh.challenge.domain.user.model.User;
 import com.behoh.challenge.domain.user.port.in.usecases.CreateUser;
 import com.behoh.challenge.domain.user.port.out.SaveUserPort;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CreateUserImpl implements CreateUser {
 
-    private SaveUserPort saveUserPort;
+    private final SaveUserPort saveUserPort;
 
     @Override
     public User create(User user) {
