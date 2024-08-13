@@ -5,15 +5,15 @@ import com.behoh.challenge.domain.event.model.Event;
 import com.behoh.challenge.domain.event.port.out.FindEventPort;
 import com.behoh.challenge.domain.event.port.out.SaveEventPort;
 import com.behoh.challenge.persistence.event.converter.EventPersistenceConverter;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Repository
 public class EventRepository implements SaveEventPort, FindEventPort {
 
-    private EventJpaRepository eventJpaRepository;
-    private EventPersistenceConverter converter;
+    private final EventJpaRepository eventJpaRepository;
+    private final EventPersistenceConverter converter;
 
     @Override
     public Event findEventById(Long eventId) {

@@ -5,16 +5,16 @@ import com.behoh.challenge.persistence.event.converter.EventPersistenceConverter
 import com.behoh.challenge.persistence.participation.entity.ParticipationEntity;
 import com.behoh.challenge.persistence.participation.entity.ParticipationId;
 import com.behoh.challenge.persistence.user.converter.UserPersistenceConverter;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Component
 public class ParticipationPersistenceConverterImpl implements ParticipationPersistenceConverter {
 
-    private EventPersistenceConverter eventConverter;
-    private UserPersistenceConverter userConverter;
+    private final EventPersistenceConverter eventConverter;
+    private final UserPersistenceConverter userConverter;
 
     @Override
     public Participation participationEntityToParticipation(@NonNull ParticipationEntity participationEntity) {
@@ -23,8 +23,7 @@ public class ParticipationPersistenceConverterImpl implements ParticipationPersi
                 userConverter.userEntityToUser(participationEntity.getUser()),
                 participationEntity.getCheckInDateTime(),
                 participationEntity.getReservationDateTime(),
-                participationEntity.isConfirmed(),
-                participationEntity.isCanceled()
+                participationEntity.isConfirmed()
         );
     }
 
@@ -36,8 +35,7 @@ public class ParticipationPersistenceConverterImpl implements ParticipationPersi
                 userConverter.userToUserEntity(participation.getUser()),
                 participation.getCheckInDateTime(),
                 participation.getReservationDateTime(),
-                participation.isConfirmed(),
-                participation.isCanceled()
+                participation.isConfirmed()
         );
     }
 

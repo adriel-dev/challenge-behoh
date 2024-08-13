@@ -28,5 +28,4 @@ public class ParticipationEntity {
     private LocalDateTime checkInDateTime = null;
     private LocalDateTime reservationDateTime = null;
     private boolean confirmed = false;
-    private boolean canceled = false;
 }

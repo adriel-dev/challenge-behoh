@@ -6,17 +6,17 @@ import com.behoh.challenge.domain.participation.port.in.usecases.RegisterUserToE
 import com.behoh.challenge.domain.participation.port.out.FindParticipationPort;
 import com.behoh.challenge.domain.participation.port.out.SaveParticipationPort;
 import com.behoh.challenge.domain.user.port.out.FindUserPort;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import static com.behoh.challenge.domain.participation.util.ParticipationUtils.canRegisterOrReserve;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RegisterUserToEventImpl implements RegisterUserToEvent {
 
-    private SaveParticipationPort saveParticipationPort;
-    private FindParticipationPort findParticipationPort;
-    private FindEventPort findEventPort;
-    private FindUserPort findUserPort;
+    private final SaveParticipationPort saveParticipationPort;
+    private final FindParticipationPort findParticipationPort;
+    private final FindEventPort findEventPort;
+    private final FindUserPort findUserPort;
 
     @Override
     public void register(Long userId, Long eventId) {

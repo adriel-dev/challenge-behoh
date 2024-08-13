@@ -1,8 +1,10 @@
 package com.behoh.challenge.persistence.participation.repository;
 
+import com.behoh.challenge.domain.event.exception.RegistrationNotAllowedException;
 import com.behoh.challenge.domain.event.model.Event;
 import com.behoh.challenge.domain.participation.exception.ParticipationNotFoundException;
 import com.behoh.challenge.domain.participation.model.Participation;
+import com.behoh.challenge.domain.participation.port.out.DeleteParticipationPort;
 import com.behoh.challenge.domain.participation.port.out.FindParticipationPort;
 import com.behoh.challenge.domain.participation.port.out.SaveParticipationPort;
 import com.behoh.challenge.domain.user.model.User;
@@ -10,19 +12,19 @@ import com.behoh.challenge.persistence.event.converter.EventPersistenceConverter
 import com.behoh.challenge.persistence.participation.converter.ParticipationPersistenceConverter;
 import com.behoh.challenge.persistence.participation.entity.ParticipationId;
 import com.behoh.challenge.persistence.user.converter.UserPersistenceConverter;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Repository
-public class ParticipationRepository implements FindParticipationPort, SaveParticipationPort {
+public class ParticipationRepository implements FindParticipationPort, SaveParticipationPort, DeleteParticipationPort {
 
-    private ParticipationJpaRepository participationJpaRepository;
-    private ParticipationPersistenceConverter participationConverter;
-    private UserPersistenceConverter userConverter;
-    private EventPersistenceConverter eventConverter;
+    private final ParticipationJpaRepository participationJpaRepository;
+    private final ParticipationPersistenceConverter participationConverter;
+    private final UserPersistenceConverter userConverter;
+    private final EventPersistenceConverter eventConverter;
 
     @Override
     public Participation findParticipation(Long userId, Long eventId) {
@@ -70,6 +72,10 @@ public class ParticipationRepository implements FindParticipationPort, SaveParti
 
     @Override
     public Participation saveParticipation(Participation participation) {
+        var participationId = new ParticipationId(participation.getEvent().getId(), participation.getUser().getId());
+        if(participationJpaRepository.existsById(participationId)) {
+            throw new RegistrationNotAllowedException(participation.getUser().getId());
+        }
         var participationToSave = participationConverter.participationToParticipationEntity(participation);
         return participationConverter.participationEntityToParticipation(participationJpaRepository.save(participationToSave));
     }
@@ -83,11 +89,15 @@ public class ParticipationRepository implements FindParticipationPort, SaveParti
                 .orElseThrow(() -> new ParticipationNotFoundException(userId, eventId));
         foundParticipation.setReservationDateTime(participation.getReservationDateTime());
         foundParticipation.setCheckInDateTime(participation.getCheckInDateTime());
-        foundParticipation.setCanceled(participation.isCanceled());
         foundParticipation.setConfirmed(participation.isConfirmed());
         return participationConverter.participationEntityToParticipation(
                 participationJpaRepository.save(foundParticipation)
         );
     }
 
+    @Override
+    public void deleteParticipation(Long userId, Long eventId) {
+        var participationId = new ParticipationId(eventId, userId);
+        participationJpaRepository.deleteById(participationId);
+    }
 }
