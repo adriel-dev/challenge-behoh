@@ -2,12 +2,14 @@ package com.behoh.challenge.persistence.participation.repository;
 
 import com.behoh.challenge.domain.event.exception.RegistrationNotAllowedException;
 import com.behoh.challenge.domain.event.model.Event;
+import com.behoh.challenge.domain.event.port.out.FindEventPort;
 import com.behoh.challenge.domain.participation.exception.ParticipationNotFoundException;
 import com.behoh.challenge.domain.participation.model.Participation;
 import com.behoh.challenge.domain.participation.port.out.DeleteParticipationPort;
 import com.behoh.challenge.domain.participation.port.out.FindParticipationPort;
 import com.behoh.challenge.domain.participation.port.out.SaveParticipationPort;
 import com.behoh.challenge.domain.user.model.User;
+import com.behoh.challenge.domain.user.port.out.FindUserPort;
 import com.behoh.challenge.persistence.event.converter.EventPersistenceConverter;
 import com.behoh.challenge.persistence.participation.converter.ParticipationPersistenceConverter;
 import com.behoh.challenge.persistence.participation.entity.ParticipationId;
@@ -22,6 +24,8 @@ import java.util.List;
 public class ParticipationRepository implements FindParticipationPort, SaveParticipationPort, DeleteParticipationPort {
 
     private final ParticipationJpaRepository participationJpaRepository;
+    private final FindEventPort findEventPort;
+    private final FindUserPort findUserPort;
     private final ParticipationPersistenceConverter participationConverter;
     private final UserPersistenceConverter userConverter;
     private final EventPersistenceConverter eventConverter;
@@ -40,6 +44,7 @@ public class ParticipationRepository implements FindParticipationPort, SaveParti
 
     @Override
     public List<User> findAllUsersWithConfirmedRegistration(Long eventId) {
+        findEventPort.findEventById(eventId);
         return participationJpaRepository.findByIdEventIdAndConfirmedTrue(eventId).stream()
                 .map(
                         (participation) ->  userConverter.userEntityToUser(participation.getUser())
@@ -48,6 +53,7 @@ public class ParticipationRepository implements FindParticipationPort, SaveParti
 
     @Override
     public List<User> findAllUsersWithReservation(Long eventId) {
+        findEventPort.findEventById(eventId);
         return participationJpaRepository.findByIdEventIdAndReservationDateTimeNotNull(eventId).stream()
                 .map(
                         (participation -> userConverter.userEntityToUser(participation.getUser()))
@@ -56,6 +62,7 @@ public class ParticipationRepository implements FindParticipationPort, SaveParti
 
     @Override
     public List<User> findAllUsersWithRegistrationOrReservation(Long eventId) {
+        findEventPort.findEventById(eventId);
         return participationJpaRepository.findByIdEventIdAndConfirmedTrueOrReservationDateTimeNotNull(eventId).stream()
                 .map(
                         (participation) -> userConverter.userEntityToUser(participation.getUser())
@@ -64,6 +71,7 @@ public class ParticipationRepository implements FindParticipationPort, SaveParti
 
     @Override
     public List<Event> findAllUsersEventsRegistrations(Long userId) {
+        findUserPort.findUserById(userId);
         return participationJpaRepository.findByIdUserId(userId).stream()
                 .map(
                         (participation -> eventConverter.eventEntityToEvent(participation.getEvent()))
